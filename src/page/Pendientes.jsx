@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import { toast } from "react-toastify";
 
 export const Recordatorios = () => {
@@ -14,12 +14,14 @@ export const Recordatorios = () => {
     data: "",
     name: "",
     descripcion: "",
+    imageUrl: "",
   };
 
   const [values, setValues] = useState(initialStateValues);
   const [recordatorios, setRecordatorios] = useState([]);
   const [currentId, setCurrentId] = useState("");
   const [filterName, setFilterName] = useState("");
+  const [file, setFile] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +32,12 @@ export const Recordatorios = () => {
     return str === "";
   };
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateData(values.data)) {
       toast("ERROR: Ingrese una Fecha", {
@@ -39,7 +46,16 @@ export const Recordatorios = () => {
         position: "top-center",
       });
     } else {
-      addOrEditRecordatorio(values);
+      let fileUrl = "";
+      if (file) {
+        const fileRef = storage.ref(`images/${file.name}`);
+        await fileRef.put(file);
+        fileUrl = await fileRef.getDownloadURL();
+      }
+
+      addOrEditRecordatorio({ ...values, imageUrl: fileUrl });
+      setFile(null);
+
       setValues(initialStateValues);
       setCurrentId("");
     }
@@ -91,7 +107,6 @@ export const Recordatorios = () => {
           docs.push({ ...doc.data(), id: doc.id });
         });
 
-        // Aplicar filtro por nombre
         const filteredRecordatorios = filterName
           ? docs.filter((recordatorio) =>
               recordatorio.name.toLowerCase().includes(filterName.toLowerCase())
@@ -119,7 +134,6 @@ export const Recordatorios = () => {
   };
 
   const handleToggleTask = (id) => {
-    // Actualizar el estado de las tareas marcadas como realizadas
     setRecordatorios((prevRecordatorios) =>
       prevRecordatorios.map((recordatorio) =>
         recordatorio.id === id ? { ...recordatorio, completed: !recordatorio.completed } : recordatorio
@@ -171,6 +185,19 @@ export const Recordatorios = () => {
               ></textarea>
             </div>
 
+            <div className="form-group input-group p-1">
+              <div className="input-group-text bg-light">
+                <i className="material-icons text-primary">attach_file</i>
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                className="form-control"
+                name="file"
+                onChange={handleFileChange}
+              />
+            </div>
+
             <button className="btn btn-primary btn-block m-1">
               {currentId === "" ? "GUARDAR" : "ACTUALIZAR"}
             </button>
@@ -193,9 +220,7 @@ export const Recordatorios = () => {
           </div>
           {recordatorios.map((recordatorio) => (
             <div
-              className={`card mb-1 text-center mb-5 ${
-                recordatorio.completed ? "completed-task" : ""
-              }`}
+              className={`card mb-1 text-center mb-5 ${recordatorio.completed ? "completed-task" : ""}`}
               key={recordatorio.id}
             >
               <div className="card-body">
@@ -218,9 +243,7 @@ export const Recordatorios = () => {
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <div>
                     <h4
-                      className={`text-success ${
-                        recordatorio.completed ? "task-completed" : ""
-                      }`}
+                      className={`text-success ${recordatorio.completed ? "task-completed" : ""}`}
                     >
                       {recordatorio.name}
                     </h4>
@@ -245,12 +268,21 @@ export const Recordatorios = () => {
                   </div>
                 </div>
                 <p
-                  className={`task-description ${
-                    recordatorio.completed ? "task-completed" : ""
-                  }`}
+                  className={`task-description ${recordatorio.completed ? "task-completed" : ""}`}
                 >
                   {recordatorio.descripcion}
                 </p>
+
+                {recordatorio.imageUrl && (
+                  <div className="mt-3">
+                    <img
+                      src={recordatorio.imageUrl}
+                      alt="Imagen adjunta"
+                      style={{ width: "100px", cursor: "pointer" }}
+                      onClick={() => window.open(recordatorio.imageUrl, "_blank")}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -261,4 +293,5 @@ export const Recordatorios = () => {
 };
 
 export default Recordatorios;
+
 
