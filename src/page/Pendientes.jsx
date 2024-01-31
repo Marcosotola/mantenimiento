@@ -19,6 +19,7 @@ export const Recordatorios = () => {
   const [values, setValues] = useState(initialStateValues);
   const [recordatorios, setRecordatorios] = useState([]);
   const [currentId, setCurrentId] = useState("");
+  const [filterName, setFilterName] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -89,13 +90,21 @@ export const Recordatorios = () => {
         querySnapshot.forEach((doc) => {
           docs.push({ ...doc.data(), id: doc.id });
         });
-        setRecordatorios(docs);
+
+        // Aplicar filtro por nombre
+        const filteredRecordatorios = filterName
+          ? docs.filter((recordatorio) =>
+              recordatorio.name.toLowerCase().includes(filterName.toLowerCase())
+            )
+          : docs;
+
+        setRecordatorios(filteredRecordatorios);
       });
   };
 
   useEffect(() => {
     getRecordatorios();
-  }, []);
+  }, [filterName]);
 
   const handleEditReminder = (id) => {
     const reminderToEdit = recordatorios.find((recordatorio) => recordatorio.id === id);
@@ -122,9 +131,7 @@ export const Recordatorios = () => {
     <>
       <div>
         <div className=" col-md-6 mx-auto p-2">
-          <h4 className="d-flex justify-content-center p-3">
-            Ingresar Pendiente
-          </h4>
+          <h4 className="d-flex justify-content-center p-3">Ingresar Pendiente</h4>
           <form className="card card-body p-4" onSubmit={handleSubmit}>
             <div className="form-group input-group p-1">
               <div className="input-group-text bg-light">
@@ -172,17 +179,35 @@ export const Recordatorios = () => {
 
         <div className=" col-md-8 mx-auto p-2">
           <h4 className="d-flex justify-content-center p-3">Reporte de Pendientes</h4>
+          <div className="form-group input-group p-1 mb-3">
+            <div className="input-group-text bg-light">
+              <i className="material-icons text-primary">search</i>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Filtrar por Cliente"
+              onChange={(e) => setFilterName(e.target.value)}
+              value={filterName}
+            />
+          </div>
           {recordatorios.map((recordatorio) => (
-            <div className={`card mb-1 text-center mb-5 ${recordatorio.completed ? 'completed-task' : ''}`} key={recordatorio.id}>
+            <div
+              className={`card mb-1 text-center mb-5 ${
+                recordatorio.completed ? "completed-task" : ""
+              }`}
+              key={recordatorio.id}
+            >
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
-                    
-                    <button className="btn btn-lg btn-secundary border"> <input
-                      type="checkbox"
-                      checked={recordatorio.completed}
-                      onChange={() => handleToggleTask(recordatorio.id)}
-                    />
+                    <button className="btn btn-lg btn-secundary border">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        checked={recordatorio.completed}
+                        onChange={() => handleToggleTask(recordatorio.id)}
+                      />
                     </button>
                   </div>
                   <div>
@@ -191,9 +216,12 @@ export const Recordatorios = () => {
                 </div>
                 <hr />
                 <div className="d-flex justify-content-between align-items-center mb-3">
-
                   <div>
-                    <h4 className={`text-success ${recordatorio.completed ? 'task-completed' : ''}`}>
+                    <h4
+                      className={`text-success ${
+                        recordatorio.completed ? "task-completed" : ""
+                      }`}
+                    >
                       {recordatorio.name}
                     </h4>
                   </div>
@@ -206,7 +234,6 @@ export const Recordatorios = () => {
                         delete
                       </i>
                     </button>
-
                     <button className="btn" onClick={scrollToTop}>
                       <i
                         className="material-icons"
@@ -217,8 +244,11 @@ export const Recordatorios = () => {
                     </button>
                   </div>
                 </div>
-
-                <p className={`task-description ${recordatorio.completed ? 'task-completed' : ''}`}>
+                <p
+                  className={`task-description ${
+                    recordatorio.completed ? "task-completed" : ""
+                  }`}
+                >
                   {recordatorio.descripcion}
                 </p>
               </div>
@@ -231,3 +261,4 @@ export const Recordatorios = () => {
 };
 
 export default Recordatorios;
+
