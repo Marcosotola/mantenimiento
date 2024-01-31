@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootswatch/dist/slate/bootstrap.min.css'; // Added this :boom:
+import 'bootswatch/dist/spacelab/bootstrap.min.css'; // Added this :boom:
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

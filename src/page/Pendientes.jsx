@@ -122,7 +122,7 @@ export const Recordatorios = () => {
     <>
       <div>
         <div className=" col-md-6 mx-auto p-2">
-          <h4 className="d-flex justify-content-center p-3 text-warning">
+          <h4 className="d-flex justify-content-center p-3">
             Ingresar Pendiente
           </h4>
           <form className="card card-body p-4" onSubmit={handleSubmit}>
@@ -173,12 +173,12 @@ export const Recordatorios = () => {
         <div className=" col-md-8 mx-auto p-2">
           <h4 className="d-flex justify-content-center p-3">Reporte de Pendientes</h4>
           {recordatorios.map((recordatorio) => (
-            <div className={`card mb-1 text-center ${recordatorio.completed ? 'completed-task' : ''}`} key={recordatorio.id}>
+            <div className={`card mb-1 text-center mb-5 ${recordatorio.completed ? 'completed-task' : ''}`} key={recordatorio.id}>
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     
-                    <button className="btn btn-lg btn-primary "> <input
+                    <button className="btn btn-lg btn-secundary border"> <input
                       type="checkbox"
                       checked={recordatorio.completed}
                       onChange={() => handleToggleTask(recordatorio.id)}
@@ -186,7 +186,7 @@ export const Recordatorios = () => {
                     </button>
                   </div>
                   <div>
-                    <h6 className="text-white">{recordatorio.data}</h6>
+                    <h6 className="text-info">{recordatorio.data}</h6>
                   </div>
                 </div>
                 <hr />
