@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db, storage } from "../firebase";
 import { toast } from "react-toastify";
+import { format } from 'date-fns';
 
 export const Recordatorios = () => {
   const scrollToTop = () => {
@@ -18,7 +19,7 @@ export const Recordatorios = () => {
   };
 
   const [values, setValues] = useState(initialStateValues);
-  const [recordatorios, setRecordatorios] = useState([]);
+  const [pendientes, setPendientes] = useState([]);  // Cambié el nombre de la variable a "pendientes"
   const [currentId, setCurrentId] = useState("");
   const [filterName, setFilterName] = useState("");
   const [file, setFile] = useState(null);
@@ -53,7 +54,7 @@ export const Recordatorios = () => {
         fileUrl = await fileRef.getDownloadURL();
       }
 
-      addOrEditRecordatorio({ ...values, imageUrl: fileUrl });
+      addOrEditPendiente({ ...values, imageUrl: fileUrl });  // Cambié el nombre de la función a "addOrEditPendiente"
       setFile(null);
 
       setValues(initialStateValues);
@@ -61,20 +62,20 @@ export const Recordatorios = () => {
     }
   };
 
-  const addOrEditRecordatorio = async (recordatorioObject) => {
+  const addOrEditPendiente = async (pendienteObject) => {  // Cambié el nombre de la función a "addOrEditPendiente"
     try {
       if (currentId === "") {
-        await db.collection("recordatorios").doc().set(recordatorioObject);
+        await db.collection("pendientes").doc().set(pendienteObject);  // Cambié la colección a "pendientes"
 
-        toast("Recordatorio Agregado", {
+        toast("Pendiente Agregado", {
           type: "success",
           autoClose: 1000,
           position: "top-center",
         });
       } else {
-        await db.collection("recordatorios").doc(currentId).update(recordatorioObject);
+        await db.collection("pendientes").doc(currentId).update(pendienteObject);  // Cambié la colección a "pendientes"
 
-        toast("Recordatorio Actualizado", {
+        toast("Pendiente Actualizado", {
           type: "info",
           autoClose: 1000,
           position: "top-center",
@@ -86,11 +87,11 @@ export const Recordatorios = () => {
     }
   };
 
-  const onDeleteRecordatorio = async (id) => {
-    if (window.confirm("¿Desea eliminar el recordatorio?")) {
-      await db.collection("recordatorios").doc(id).delete();
+  const onDeletePendiente = async (id) => {  // Cambié el nombre de la función a "onDeletePendiente"
+    if (window.confirm("¿Desea eliminar el pendiente?")) {
+      await db.collection("pendientes").doc(id).delete();  // Cambié la colección a "pendientes"
 
-      toast("Recordatorio Eliminado", {
+      toast("Pendiente Eliminado", {
         type: "error",
         autoClose: 1000,
         position: "top-center",
@@ -98,8 +99,8 @@ export const Recordatorios = () => {
     }
   };
 
-  const getRecordatorios = async () => {
-    db.collection("recordatorios")
+  const getPendientes = async () => {  // Cambié el nombre de la función a "getPendientes"
+    db.collection("pendientes")
       .orderBy("name", "asc")
       .onSnapshot((querySnapshot) => {
         const docs = [];
@@ -107,22 +108,22 @@ export const Recordatorios = () => {
           docs.push({ ...doc.data(), id: doc.id });
         });
 
-        const filteredRecordatorios = filterName
-          ? docs.filter((recordatorio) =>
-              recordatorio.name.toLowerCase().includes(filterName.toLowerCase())
+        const filteredPendientes = filterName
+          ? docs.filter((pendiente) =>
+              pendiente.name.toLowerCase().includes(filterName.toLowerCase())
             )
           : docs;
 
-        setRecordatorios(filteredRecordatorios);
+        setPendientes(filteredPendientes);
       });
   };
 
   useEffect(() => {
-    getRecordatorios();
-  }, [filterName]);
+    getPendientes();
+  }, [filterName],);
 
   const handleEditReminder = (id) => {
-    const reminderToEdit = recordatorios.find((recordatorio) => recordatorio.id === id);
+    const reminderToEdit = pendientes.find((pendiente) => pendiente.id === id);
     if (reminderToEdit) {
       setValues({
         data: reminderToEdit.data,
@@ -134,9 +135,9 @@ export const Recordatorios = () => {
   };
 
   const handleToggleTask = (id) => {
-    setRecordatorios((prevRecordatorios) =>
-      prevRecordatorios.map((recordatorio) =>
-        recordatorio.id === id ? { ...recordatorio, completed: !recordatorio.completed } : recordatorio
+    setPendientes((prevPendientes) =>
+      prevPendientes.map((pendiente) =>
+        pendiente.id === id ? { ...pendiente, completed: !pendiente.completed } : pendiente
       )
     );
   };
@@ -218,41 +219,40 @@ export const Recordatorios = () => {
               value={filterName}
             />
           </div>
-          {recordatorios.map((recordatorio) => (
+          {pendientes.map((pendiente) => (  // Cambié el nombre de la variable a "pendientes"
             <div
-              className={`card mb-1 text-center mb-5 ${recordatorio.completed ? "completed-task" : ""}`}
-              key={recordatorio.id}
+              className={`card mb-1 text-center mb-5 ${pendiente.completed ? "completed-task" : ""}`}
+              key={pendiente.id}
             >
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <button className="btn btn-lg btn-secundary border">
-                      {" "}
                       <input
                         type="checkbox"
-                        checked={recordatorio.completed}
-                        onChange={() => handleToggleTask(recordatorio.id)}
+                        checked={pendiente.completed}
+                        onChange={() => handleToggleTask(pendiente.id)}
                       />
                     </button>
                   </div>
                   <div>
-                    <h6 className="text-info">{recordatorio.data}</h6>
+                    <h6 className="text-info">{format(new Date(pendiente.data), "dd/MM/yy")}</h6>
                   </div>
                 </div>
                 <hr />
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <div>
                     <h4
-                      className={`text-success ${recordatorio.completed ? "task-completed" : ""}`}
+                      className={`text-success ${pendiente.completed ? "task-completed" : ""}`}
                     >
-                      {recordatorio.name}
+                      {pendiente.name}
                     </h4>
                   </div>
                   <div>
                     <button className="btn">
                       <i
                         className="material-icons text-danger"
-                        onClick={() => onDeleteRecordatorio(recordatorio.id)}
+                        onClick={() => onDeletePendiente(pendiente.id)}
                       >
                         delete
                       </i>
@@ -260,7 +260,7 @@ export const Recordatorios = () => {
                     <button className="btn" onClick={scrollToTop}>
                       <i
                         className="material-icons"
-                        onClick={() => handleEditReminder(recordatorio.id)}
+                        onClick={() => handleEditReminder(pendiente.id)}
                       >
                         edit
                       </i>
@@ -268,18 +268,18 @@ export const Recordatorios = () => {
                   </div>
                 </div>
                 <p
-                  className={`task-description ${recordatorio.completed ? "task-completed" : ""}`}
+                  className={`task-description ${pendiente.completed ? "task-completed" : ""}`}
                 >
-                  {recordatorio.descripcion}
+                  {pendiente.descripcion}
                 </p>
 
-                {recordatorio.imageUrl && (
+                {pendiente.imageUrl && (
                   <div className="mt-3">
                     <img
-                      src={recordatorio.imageUrl}
+                      src={pendiente.imageUrl}
                       alt="Imagen adjunta"
                       style={{ width: "100px", cursor: "pointer" }}
-                      onClick={() => window.open(recordatorio.imageUrl, "_blank")}
+                      onClick={() => window.open(pendiente.imageUrl, "_blank")}
                     />
                   </div>
                 )}
