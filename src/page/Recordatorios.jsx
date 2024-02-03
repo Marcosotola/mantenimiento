@@ -4,20 +4,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast } from "react-toastify";
 import { parse, format } from 'date-fns';
 
-
 const Recordatorios = () => {
   const [fecha, setFecha] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [recordatorios, setRecordatorios] = useState([]);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
-  // Declarar la función fuera del bloque del efecto
   const obtenerRecordatorios = async () => {
     const snapshot = await db.collection('recordatorios').get();
     setRecordatorios(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
   };
 
   useEffect(() => {
-    // Llamar a la función desde el efecto
     obtenerRecordatorios();
   }, []);
 
@@ -40,6 +38,7 @@ const Recordatorios = () => {
       });
 
       obtenerRecordatorios();
+      setMostrarFormulario(false); // Ocultar el formulario después de enviar
     }
   };
 
@@ -59,40 +58,53 @@ const Recordatorios = () => {
 
   return (
     <div className="container mt-5">
-      <h4 className="d-flex justify-content-center p-3">Ingresar Recordatorio</h4>
 
-      <form className='card card-body p-4' onSubmit={handleSubmit}>
-        <div className="form-group input-group p-1">
-          <div className="input-group-text bg-light">
-            <i className="material-icons text-primary">event</i>
-          </div>
-          <input
-            type="date"
-            className="form-control"
-            id="fecha"
-            value={fecha}
-            onChange={(e) => setFecha(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <textarea
-            className="form-control"
-            id="descripcion"
-            rows="3"
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            placeholder='Descripcion'
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Agregar</button>
-      </form>
+      {!mostrarFormulario ? (
+
+        <button
+          className="btn btn-primary"
+          onClick={() => setMostrarFormulario(true)}
+        >
+          <i className="material-icons">add</i> Agregar Recordatorio
+        </button>
+
+      ) : (
+        <>
+          <h4 className="d-flex justify-content-center p-3">Ingresar Recordatorio</h4>
+          <form className='card card-body p-4' onSubmit={handleSubmit}>
+            <div className="form-group input-group p-1">
+              <div className="input-group-text bg-light">
+                <i className="material-icons text-primary">event</i>
+              </div>
+              <input
+                type="date"
+                className="form-control"
+                id="fecha"
+                value={fecha}
+                onChange={(e) => setFecha(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <textarea
+                className="form-control"
+                id="descripcion"
+                rows="3"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+                placeholder='Descripcion'
+              />
+            </div>
+
+            <button type="submit" className="btn btn-primary">Agregar</button>
+          </form>
+        </>
+      )}
 
       <table className="table mt-4">
         <thead>
           <tr className=''>
             <th className='text-center'>Fecha</th>
             <th className='text-center'>Descripción</th>
-
           </tr>
         </thead>
         <tbody>
@@ -111,7 +123,6 @@ const Recordatorios = () => {
                     delete
                   </i>
                 </button>
-
               </td>
             </tr>
           ))}
@@ -122,6 +133,7 @@ const Recordatorios = () => {
 };
 
 export default Recordatorios;
+
 
 
 

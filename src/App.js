@@ -12,7 +12,7 @@ import Recordatorios from './page/Recordatorios.jsx';
 function App() {
   return (
     <>
-      <div className='' >
+      <div className='spacelab' >
         <Router>
           <Navbar />
           <Routes >
