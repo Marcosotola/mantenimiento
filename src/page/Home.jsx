@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
-import { format } from 'date-fns';
+import { parse, format } from 'date-fns';
 
 export const Home = () => {
   const [pendientes, setPendientes] = useState([]);  // Cambié el nombre de la variable a "pendientes"
@@ -54,7 +54,9 @@ export const Home = () => {
         <div className="container mt-3 mb-3">
           {recordatorios.map(recordatorio => (
             <div key={recordatorio.id} className="list-group-item d-flex justify-content-between align-items-center p-2 mb-2">
-              <div className="text-center">{format(new Date(recordatorio.fecha), "dd/MM/yy")}</div>
+              <div className="text-center">
+                {format(parse(recordatorio.fecha, 'yyyy-MM-dd', new Date()), 'dd/MM/yy')}
+              </div>
               <div className="text-center">{recordatorio.descripcion}</div>
             </div>
           ))}
@@ -94,13 +96,15 @@ export const Home = () => {
               <th className="text-center">Descripción</th>
             </tr>
           </thead>
-          <tbody className="table-active border-white">
-            {pendientes.map((pendiente) => (  // Cambié el nombre de la variable a "pendientes"
+          <tbody className="table-secondary border-white">
+            {pendientes.map((pendiente) => (
               <tr
                 key={pendiente.id}
                 className={pendiente.completed ? "completed-task" : ""}
               >
-                <td className="text-center">{format(new Date(pendiente.data), "dd/MM/yy")}</td>
+                <td className="text-center">
+                {format(parse(pendiente.data, 'yyyy-MM-dd', new Date()), 'dd/MM/yy')}
+                </td>
                 <td
                   className={`text-success text-center ${pendiente.completed ? "task-completed" : ""
                     }`}

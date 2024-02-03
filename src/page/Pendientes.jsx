@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db, storage } from "../firebase";
 import { toast } from "react-toastify";
-import { format } from 'date-fns';
+import { parse, format } from 'date-fns';
 
 export const Recordatorios = () => {
   const scrollToTop = () => {
@@ -236,7 +236,9 @@ export const Recordatorios = () => {
                     </button>
                   </div>
                   <div>
-                    <h6 className="text-info">{format(new Date(pendiente.data), "dd/MM/yy")}</h6>
+                    <h6 className="text-info">
+                    {format(parse(pendiente.data, 'yyyy-MM-dd', new Date()), 'dd/MM/yy')}
+                      </h6>
                   </div>
                 </div>
                 <hr />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast } from "react-toastify";
-import { format } from 'date-fns';
+import { parse, format } from 'date-fns';
 
 
 const Recordatorios = () => {
@@ -98,18 +98,20 @@ const Recordatorios = () => {
         <tbody>
           {recordatorios.map(recordatorio => (
             <tr key={recordatorio.id}>
-              <td className='text-center justify-content-center align-items-center'>{format(new Date(recordatorio.fecha), "dd/MM/yy")}</td>
+              <td className='text-center justify-content-center align-items-center'>
+                {format(parse(recordatorio.fecha, 'yyyy-MM-dd', new Date()), 'dd/MM/yy')}
+              </td>
               <td className='text-center justify-content-center align-items-center'>{recordatorio.descripcion}</td>
               <td>
                 <button className="btn justify-content-center align-items-center">
-                      <i
-                        className="material-icons text-danger"
-                        onClick={() => handleEliminar(recordatorio.id)}
-                      >
-                        delete
-                      </i>
-                    </button>
-              
+                  <i
+                    className="material-icons text-danger"
+                    onClick={() => handleEliminar(recordatorio.id)}
+                  >
+                    delete
+                  </i>
+                </button>
+
               </td>
             </tr>
           ))}
