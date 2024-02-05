@@ -7,7 +7,7 @@ export const Home = () => {
 
   const getPendientes = async () => {  // Cambié el nombre de la función a "getPendientes"
     db.collection("pendientes")  // Cambié la colección de "recordatorios" a "pendientes"
-      .orderBy("name", "asc")
+      .orderBy("data", "asc")
       .onSnapshot((querySnapshot) => {
         const docs = querySnapshot.docs.map((doc) => ({
           ...doc.data(),
