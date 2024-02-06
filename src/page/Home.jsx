@@ -3,10 +3,27 @@ import { db } from "../firebase";
 import { parse, format } from 'date-fns';
 
 export const Home = () => {
-  const [pendientes, setPendientes] = useState([]);  // Cambié el nombre de la variable a "pendientes"
+  const [recordatorios, setRecordatorios] = useState([]);
+  const [pendientes, setPendientes] = useState([]);
 
-  const getPendientes = async () => {  // Cambié el nombre de la función a "getPendientes"
-    db.collection("pendientes")  // Cambié la colección de "recordatorios" a "pendientes"
+  useEffect(() => {
+    const getRecordatorios = async () => {
+      db.collection("recordatorios")
+        .orderBy("fecha", "asc")
+        .onSnapshot((querySnapshot) => {
+          const docs = querySnapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setRecordatorios(docs);
+        });
+    };
+
+    getRecordatorios();
+  }, []);
+
+  const getPendientes = async () => {
+    db.collection("pendientes")
       .orderBy("data", "asc")
       .onSnapshot((querySnapshot) => {
         const docs = querySnapshot.docs.map((doc) => ({
@@ -21,24 +38,22 @@ export const Home = () => {
     getPendientes();
   }, []);
 
-  const [recordatorios, setRecordatorios] = useState([]);  // Cambié el nombre de la variable a "pendientes"
-
-  const getRecordatorios = async () => {  // Cambié el nombre de la función a "getPendientes"
-    db.collection("recordatorios")  // Cambié la colección de "recordatorios" a "pendientes"
-      .orderBy("fecha", "asc")
-      .onSnapshot((querySnapshot) => {
-        const docs = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setRecordatorios(docs);
-      });
+  const handlePendienteClick = (id) => {
+    window.location.href = `/Pendientes#${id}`; // Redirige a la página de Pendientes con el fragmento de ID
   };
 
   useEffect(() => {
-    getRecordatorios();
+    // Scroll al elemento con el ID correspondiente después de 2 segundos
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 2000); // Espera 2 segundos antes de hacer scroll
+    }
   }, []);
-
 
   return (
     <>
@@ -49,7 +64,7 @@ export const Home = () => {
       </div>
       <div className="container border rounded p-2 mb-5">
         <h4 className="d-flex justify-content-center text-danger">
-          No Olvidar
+          Recordatorios
         </h4>
         <div className="container mt-3 mb-3">
           {recordatorios.map(recordatorio => (
@@ -62,7 +77,6 @@ export const Home = () => {
           ))}
         </div>
       </div>
-
 
       <div>
         <hr />
@@ -80,7 +94,6 @@ export const Home = () => {
               TAREAS PENDIENTES
             </a>
           </button>
-
         </div>
         <hr />
       </div>
@@ -101,9 +114,11 @@ export const Home = () => {
               <tr
                 key={pendiente.id}
                 className={pendiente.completed ? "completed-task" : ""}
+                onClick={() => handlePendienteClick(pendiente.id)} // Manejar evento de clic
+                style={{ cursor: 'pointer' }} // Cambiar cursor a puntero
               >
                 <td className="text-center">
-                {format(parse(pendiente.data, 'yyyy-MM-dd', new Date()), 'dd/MM/yy')}
+                  {format(parse(pendiente.data, 'yyyy-MM-dd', new Date()), 'dd/MM/yy')}
                 </td>
                 <td
                   className={`text-success text-center ${pendiente.completed ? "task-completed" : ""
@@ -127,3 +142,17 @@ export const Home = () => {
 };
 
 export default Home;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

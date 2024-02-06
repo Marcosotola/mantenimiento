@@ -3,7 +3,7 @@ import { db, storage } from "../firebase";
 import { toast } from "react-toastify";
 import { parse, format } from 'date-fns';
 
-export const Recordatorios = () => {
+export const Pendientes = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -24,6 +24,7 @@ export const Recordatorios = () => {
   const [filterName, setFilterName] = useState("");
   const [file, setFile] = useState(null);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [hashFragment, setHashFragment] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -145,6 +146,29 @@ export const Recordatorios = () => {
     }
   };
 
+  useEffect(() => {
+    // Scroll al elemento con el ID correspondiente cuando el fragmento de URL cambia
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      setHashFragment(hash);
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (hashFragment) {
+      const element = document.getElementById(hashFragment);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hashFragment]);
+
   return (
     <>
       <div>
@@ -237,6 +261,7 @@ export const Recordatorios = () => {
             <div
               className={`card mb-1 text-center mb-5 ${pendiente.completed ? "completed-task" : ""}`}
               key={pendiente.id}
+              id={pendiente.id} // Asignar el ID del pendiente como ID del elemento
             >
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
@@ -308,7 +333,11 @@ export const Recordatorios = () => {
   );
 };
 
-export default Recordatorios;
+export default Pendientes;
+
+
+
+
 
 
 
