@@ -149,25 +149,53 @@ export const Pendientes = () => {
   useEffect(() => {
     // Scroll al elemento con el ID correspondiente cuando el fragmento de URL cambia
     const handleHashChange = () => {
+
       const hash = window.location.hash.substring(1);
+
+      setHashFragment(hash);
+    };
+
+    const handlePageLoad = () => {
+
+      const hash = window.location.hash.substring(1);
+
       setHashFragment(hash);
     };
 
     window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("load", handlePageLoad);
 
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("load", handlePageLoad);
     };
   }, []);
 
   useEffect(() => {
-    if (hashFragment) {
-      const element = document.getElementById(hashFragment);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+    // Scroll al elemento con el ID correspondiente después de que la página se haya cargado completamente
+    const handleScrollToElement = () => {
+      if (hashFragment) {
+
+        // Retrasar la búsqueda del elemento hasta que la página esté completamente cargada
+        const interval = setInterval(() => {
+          const element = document.getElementById(hashFragment);
+
+          if (element) {
+            clearInterval(interval);
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+
+          }
+        }, 100); // Intenta cada 100ms
       }
-    }
+    };
+  
+    handleScrollToElement();
+  
+    return () => {
+      handleScrollToElement();
+    };
   }, [hashFragment]);
+  
 
   return (
     <>
@@ -334,10 +362,6 @@ export const Pendientes = () => {
 };
 
 export default Pendientes;
-
-
-
-
 
 
 

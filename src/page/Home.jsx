@@ -43,15 +43,13 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    // Scroll al elemento con el ID correspondiente después de 2 segundos
+    // Scroll al elemento con el ID correspondiente cuando el fragmento de URL cambia
     const hash = window.location.hash.substring(1);
     if (hash) {
-      setTimeout(() => {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 2000); // Espera 2 segundos antes de hacer scroll
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   }, []);
 
