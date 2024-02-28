@@ -1,7 +1,8 @@
 /* Contenedor del calendario */
 .calendar-container {
     margin: 0.5rem;
-    height: 70vh; /* Ajusta el valor según tus necesidades */
+    height: 100vh; /* Ajusta el valor según tus necesidades */
+    width: 200%;
   }
   
   /* Estilos para el contenedor principal del calendario */
@@ -21,7 +22,7 @@
   
   /* Estilos para el título de los eventos */
   .rbc-event-content {
-    font-size: 12px;
+    font-size: 16px;
     color: white;
     white-space: nowrap;
     overflow: hidden;
@@ -80,21 +81,4 @@
   .rbc-event {
     background-color: transparent;
    }
-  
-  /* Ocultar la barra de herramientas en dispositivos móviles */
-  @media (max-width: 768px) {
-    .rbc-toolbar {
-      display: none;
-    }
-  }
-  
-  /* Ajustar la vista de día en dispositivos móviles */
-  @media (max-width: 768px) {
-    .rbc-day-view .rbc-time-header {
-      display: none;
-    }
-    .rbc-day-view .rbc-event-content {
-      line-height: 1.5;
-    }
-  }
   

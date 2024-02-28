@@ -79,10 +79,10 @@ export const Home = () => {
       <div>
         <hr />
         <div className="container d-grid gap-3 mt-4 mb-4">
-        <button type="button" className="btn btn-outline-warning">
+        <button type="button" className="btn btn-outline-success">
             <a
               href="/Calendar"
-              className="text-decoration-none text-warning"
+              className="text-decoration-none text-success"
             >
               CALENDARIO
             </a>
