@@ -1,0 +1,100 @@
+/* Contenedor del calendario */
+.calendar-container {
+    margin: 0.5rem;
+    height: 70vh; /* Ajusta el valor según tus necesidades */
+  }
+  
+  /* Estilos para el contenedor principal del calendario */
+  .rbc-calendar {
+    font-family: Arial, sans-serif;
+    font-size: 14px; /* Reduce el tamaño de la fuente */
+  }
+  
+  /* Estilos para los eventos en el calendario */
+  .rbc-event {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    margin-bottom: 5px;
+  }
+  
+  /* Estilos para el título de los eventos */
+  .rbc-event-content {
+    font-size: 12px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Estilos para los días de la semana */
+  .rbc-row-header {
+    font-weight: bold;
+  }
+  
+  /* Estilos para el botón de navegación del calendario */
+  .rbc-toolbar button {
+    font-size: 14px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para el botón de navegación del calendario cuando está deshabilitado */
+  .rbc-toolbar button:disabled {
+    background-color: #ccc;
+    color: #666;
+  }
+  
+  /* Estilos para los encabezados de las columnas (días) */
+  .rbc-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Estilos para los días del mes en el calendario */
+  .rbc-month-view .rbc-month-row + .rbc-month-row {
+    border-top: 1px solid #ccc;
+  }
+  
+  /* Estilos para los días del mes en el calendario */
+  .rbc-month-view .rbc-date-cell {
+    border-right: 1px solid #ccc;
+  }
+  
+  /* Estilos para los días de la semana en la vista de semana */
+  .rbc-week-view .rbc-bg-cell {
+    border-right: 1px solid #ccc;
+  }
+  
+  .rbc-event-content {
+    padding: 2px 5px;
+    margin-bottom: 5px;
+  }
+  
+  .rbc-event {
+    background-color: transparent;
+   }
+  
+  /* Ocultar la barra de herramientas en dispositivos móviles */
+  @media (max-width: 768px) {
+    .rbc-toolbar {
+      display: none;
+    }
+  }
+  
+  /* Ajustar la vista de día en dispositivos móviles */
+  @media (max-width: 768px) {
+    .rbc-day-view .rbc-time-header {
+      display: none;
+    }
+    .rbc-day-view .rbc-event-content {
+      line-height: 1.5;
+    }
+  }
+  
