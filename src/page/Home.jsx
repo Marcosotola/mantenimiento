@@ -61,8 +61,8 @@ export const Home = () => {
         </h1>
       </div>
       <div className="container border rounded p-2 mb-5">
-        <h4 className="d-flex justify-content-center text-danger">
-          Recordatorios
+        <h4 className="d-flex justify-content-center text-light">
+          RECORDATORIOS
         </h4>
         <div className="container mt-3 mb-3">
           {recordatorios.map(recordatorio => (
@@ -84,7 +84,7 @@ export const Home = () => {
               href="/Calendar"
               className="text-decoration-none text-success"
             >
-              CALENDARIO
+              VISITA TECNICA
             </a>
           </button>
           <button type="button" className="btn btn-outline-warning">
@@ -104,15 +104,15 @@ export const Home = () => {
         <hr />
       </div>
       <div className="container">
-        <h4 className="d-flex justify-content-center p-3">
-          Lista de Pendientes
+        <h4 className="d-flex justify-content-center p-3 text-light">
+          LISTA DE PENDIENTES
         </h4>
         <table className="table table-hover">
           <thead>
             <tr>
-              <th className="text-center">Fecha</th>
-              <th className="text-center">Nombre</th>
-              <th className="text-center">Descripción</th>
+              <th className="text-center text-primary">Fecha</th>
+              <th className="text-center text-primary">Nombre</th>
+              <th className="text-center text-primary">Descripción</th>
             </tr>
           </thead>
           <tbody className="table-secondary border-white">

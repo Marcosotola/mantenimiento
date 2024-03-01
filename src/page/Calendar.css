@@ -1,8 +1,8 @@
 /* Contenedor del calendario */
 .calendar-container {
   margin: 0.5rem;
-  width: 250%;
-  height: 150vh;
+  width: 80rem;
+  height: 90rem;
   
 }
 
@@ -22,11 +22,6 @@
   background-color: green !important;
 }
 
-/* Estilos para el calendario */
-.rbc-calendar {
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
 
 /* Estilos para los eventos en el calendario */
 .rbc-event {
@@ -35,6 +30,12 @@
   background-color: #f0f0f0;
   padding: 2px 5px;
   margin-bottom: 5px;
+}
+
+
+.rbc-btn-group {
+  background-color: bisque;
+  margin: 2rem;
 }
 
 /* Estilos para el título de los eventos */
@@ -46,31 +47,30 @@
   text-overflow: ellipsis;
 }
 
+.rbc-header span {
+  font-size: x-large;
+  color: #666;
+}
 /* Estilos para los días de la semana */
 .rbc-row-header {
   font-weight: bold;
+  font-size: x-large;
 }
+
 
 /* Estilos para el botón de navegación del calendario */
 .rbc-toolbar button {
-  font-size: 14px;
-  padding: 5px 10px;
-  margin: 1rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+  font-size: x-large;
   cursor: pointer;
 }
 
 .rbc-toolbar-label {
-  margin: 1rem;
+font-size: xx-large;
 }
 
 /* Estilos para el botón de navegación del calendario cuando está deshabilitado */
 .rbc-toolbar button:disabled {
-  background-color: #ccc;
-  color: #666;
+
 }
 
 /* Estilos para los encabezados de las columnas (días) */
@@ -103,10 +103,6 @@
   margin-bottom: 5px;
 }
 
-.rbc-event {
-  background-color: transparent;
-}
-
 .rbc-agenda-event-cell,
 .rbc-agenda-time-cell,
 .rbc-agenda-date-cell {
@@ -128,5 +124,9 @@ transform: scale(1.5);
 
 .delete-button i {
   color: #f00; /* Color rojo para el ícono de eliminación */
+}
+
+.rbc-button-link {
+  font-size: x-large;
 }
 

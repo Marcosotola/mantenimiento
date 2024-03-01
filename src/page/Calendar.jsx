@@ -126,7 +126,7 @@ const CalendarComponent = () => {
                 />
                 <span className="event-title">{event.title}</span>
                 <button className='delete-button' onClick={() => handleDeleteEvent(event.id)}>
-                <i className="fas fa-trash-alt"></i> {/* Ícono de eliminación */}
+                <i className="fas fa-trash-alt"></i> 
               </button>
               </div>
             ),
