@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import 'moment/locale/es'; // Import Spanish locale for moment
+import 'moment/locale/es'; // Importar el local en español para moment
 import { db } from "../firebase";
 import './Calendar.css';
 
@@ -10,20 +10,20 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 const localizer = momentLocalizer(moment);
 
 const spanishMessages = {
-  allDay: 'Todo el día',
-  previous: 'Anterior',
-  next: 'Siguiente',
-  today: 'Hoy',
-  month: 'Mes',
-  week: 'Semana',
-  day: 'Día',
-  agenda: 'Agenda',
-  showMore: 'Ver más',
-  noEventsInRange: 'No hay eventos en este rango',
-  // Add more message translations if needed
+  allDay: 'Todo el día',
+  previous: 'Anterior',
+  next: 'Siguiente',
+  today: 'Hoy',
+  month: 'Mes',
+  week: 'Semana',
+  day: 'Día',
+  agenda: 'Agenda',
+  showMore: 'Ver más',
+  noEventsInRange: 'No hay eventos en este rango',
+  // Agregar más traducciones de mensajes si es necesario
 };
 
-// Function to generate a random color using Math.random
+// Función para generar un color aleatorio usando Math.random
 function generateRandomColor() {
   const letters = "0123456789ABCDEF";
   let color = "#";
@@ -34,24 +34,24 @@ function generateRandomColor() {
 }
 
 const CalendarComponent = () => {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const snapshot = await db.collection('events').get();
-        const fetchedEvents = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          start: doc.data().start.toDate(),
-          end: doc.data().end.toDate(),
-          extendedProps: { // Add extendedProps for color
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const snapshot = await db.collection('events').get();
+        const fetchedEvents = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          start: doc.data().start.toDate(),
+          end: doc.data().end.toDate(),
+          extendedProps: { // Agregar extendedProps para el color
             color: generateRandomColor(),
           },
         }));
         setEvents(fetchedEvents);
       } catch (error) {
-        console.error("Error fetching events: ", error);
+        console.error("Error al obtener eventos: ", error);
       }
     };
 
@@ -82,11 +82,11 @@ const CalendarComponent = () => {
           start,
           end,
           extendedProps: {
-            color: generateRandomColor(), // Generate random color on adding event
+            color: generateRandomColor(), // Generar color aleatorio al agregar evento
           },
         });
       } catch (error) {
-        console.error("Error adding event: ", error);
+        console.error("Error al agregar evento: ", error);
       }
     }
   };
@@ -97,7 +97,7 @@ const CalendarComponent = () => {
       try {
         await db.collection('events').doc(event.id).delete();
       } catch (error) {
-        console.error("Error deleting event: ", error);
+        console.error("Error al eliminar evento: ", error);
       }
     }
   };
@@ -115,7 +115,7 @@ const CalendarComponent = () => {
         messages={spanishMessages}
         eventPropGetter={(event) => ({
           style: {
-            backgroundColor: event.extendedProps.color, // Use the color from extendedProps
+            backgroundColor: event.extendedProps.color, // Usar el color de extendedProps
           },
         })}
       />
@@ -124,3 +124,4 @@ const CalendarComponent = () => {
 };
 
 export default CalendarComponent;
+

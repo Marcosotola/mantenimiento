@@ -1,7 +1,7 @@
 /* Contenedor del calendario */
 .calendar-container {
     margin: 0.5rem;
-    height: 100vh; /* Ajusta el valor según tus necesidades */
+    height: 120vh; /* Ajusta el valor según tus necesidades */
     width: 200%;
   }
   
@@ -80,5 +80,12 @@
   
   .rbc-event {
     background-color: transparent;
+   }
+
+   .rbc-agenda-event-cell,
+   .rbc-agenda-time-cell,
+   .rbc-agenda-date-cell {
+    color: white;
+    font-size: large;
    }
   
