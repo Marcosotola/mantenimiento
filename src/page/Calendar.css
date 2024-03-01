@@ -1,91 +1,132 @@
 /* Contenedor del calendario */
 .calendar-container {
-    margin: 0.5rem;
-    height: 120vh; /* Ajusta el valor según tus necesidades */
-    width: 200%;
-  }
+  margin: 0.5rem;
+  width: 250%;
+  height: 150vh;
   
-  /* Estilos para el contenedor principal del calendario */
-  .rbc-calendar {
-    font-family: Arial, sans-serif;
-    font-size: 14px; /* Reduce el tamaño de la fuente */
-  }
-  
-  /* Estilos para los eventos en el calendario */
-  .rbc-event {
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
-    padding: 2px 5px;
-    margin-bottom: 5px;
-  }
-  
-  /* Estilos para el título de los eventos */
-  .rbc-event-content {
-    font-size: 16px;
-    color: white;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /* Estilos para los días de la semana */
-  .rbc-row-header {
-    font-weight: bold;
-  }
-  
-  /* Estilos para el botón de navegación del calendario */
-  .rbc-toolbar button {
-    font-size: 14px;
-    padding: 5px 10px;
-    margin: 0 5px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* Estilos para el botón de navegación del calendario cuando está deshabilitado */
-  .rbc-toolbar button:disabled {
-    background-color: #ccc;
-    color: #666;
-  }
-  
-  /* Estilos para los encabezados de las columnas (días) */
-  .rbc-header {
-    background-color: #f0f0f0;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  /* Estilos para los días del mes en el calendario */
-  .rbc-month-view .rbc-month-row + .rbc-month-row {
-    border-top: 1px solid #ccc;
-  }
-  
-  /* Estilos para los días del mes en el calendario */
-  .rbc-month-view .rbc-date-cell {
-    border-right: 1px solid #ccc;
-  }
-  
-  /* Estilos para los días de la semana en la vista de semana */
-  .rbc-week-view .rbc-bg-cell {
-    border-right: 1px solid #ccc;
-  }
-  
-  .rbc-event-content {
-    padding: 2px 5px;
-    margin-bottom: 5px;
-  }
-  
-  .rbc-event {
-    background-color: transparent;
-   }
+}
 
-   .rbc-agenda-event-cell,
-   .rbc-agenda-time-cell,
-   .rbc-agenda-date-cell {
-    color: white;
-    font-size: large;
-   }
-  
+/* Estilos para el contenedor de eventos */
+.event-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos para el título de los eventos */
+.event-title {
+  margin-left: 10px;
+}
+
+/* Estilos para los eventos completados */
+.event-completed {
+  background-color: green !important;
+}
+
+/* Estilos para el calendario */
+.rbc-calendar {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+/* Estilos para los eventos en el calendario */
+.rbc-event {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  padding: 2px 5px;
+  margin-bottom: 5px;
+}
+
+/* Estilos para el título de los eventos */
+.rbc-event-content {
+  font-size: 16px;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Estilos para los días de la semana */
+.rbc-row-header {
+  font-weight: bold;
+}
+
+/* Estilos para el botón de navegación del calendario */
+.rbc-toolbar button {
+  font-size: 14px;
+  padding: 5px 10px;
+  margin: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rbc-toolbar-label {
+  margin: 1rem;
+}
+
+/* Estilos para el botón de navegación del calendario cuando está deshabilitado */
+.rbc-toolbar button:disabled {
+  background-color: #ccc;
+  color: #666;
+}
+
+/* Estilos para los encabezados de las columnas (días) */
+.rbc-header {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+
+.rbc-week-view {
+  margin-top: 2rem;
+}
+
+/* Estilos para los días del mes en el calendario */
+.rbc-month-view .rbc-month-row + .rbc-month-row {
+  border-top: 1px solid #ccc;
+}
+
+/* Estilos para los días del mes en el calendario */
+.rbc-month-view .rbc-date-cell {
+  border-right: 1px solid #ccc;
+}
+
+/* Estilos para los días de la semana en la vista de semana */
+.rbc-week-view .rbc-bg-cell {
+  border-right: 1px solid #ccc;
+}
+
+.rbc-event-content {
+  padding: 2px 5px;
+  margin-bottom: 5px;
+}
+
+.rbc-event {
+  background-color: transparent;
+}
+
+.rbc-agenda-event-cell,
+.rbc-agenda-time-cell,
+.rbc-agenda-date-cell {
+  color: white;
+  font-size: large;
+}
+
+/* Estilos para la casilla de verificación */
+.checkbox-input {
+transform: scale(1.5);
+}
+
+
+.delete-button {
+  background: white;
+  border: none;
+  margin-left: 10px; /* Espacio entre el evento y el botón de eliminar */
+}
+
+.delete-button i {
+  color: #f00; /* Color rojo para el ícono de eliminación */
+}
+

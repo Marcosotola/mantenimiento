@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import 'moment/locale/es'; // Importar el local en español para moment
 import { db } from "../firebase";
 import './Calendar.css';
-
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
@@ -18,20 +16,9 @@ const spanishMessages = {
   week: 'Semana',
   day: 'Día',
   agenda: 'Agenda',
-  showMore: 'Ver más',
+  showMore: total => `+ Mostrar más (${total})`, // Función showMore actualizada
   noEventsInRange: 'No hay eventos en este rango',
-  // Agregar más traducciones de mensajes si es necesario
 };
-
-// Función para generar un color aleatorio usando Math.random
-function generateRandomColor() {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
 
 const CalendarComponent = () => {
   const [events, setEvents] = useState([]);
@@ -45,9 +32,8 @@ const CalendarComponent = () => {
           ...doc.data(),
           start: doc.data().start.toDate(),
           end: doc.data().end.toDate(),
-          extendedProps: { // Agregar extendedProps para el color
-            color: generateRandomColor(),
-          },
+          completed: doc.data().completed,
+          color: doc.data().completed ? '#009929' : '#ff4040',
         }));
         setEvents(fetchedEvents);
       } catch (error) {
@@ -57,15 +43,14 @@ const CalendarComponent = () => {
 
     fetchEvents();
 
-    const unsubscribe = db.collection('events').onSnapshot(snapshot => {
+    const unsubscribe = db.collection('events').onSnapshot(async (snapshot) => {
       const fetchedEvents = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
         start: doc.data().start.toDate(),
         end: doc.data().end.toDate(),
-        extendedProps: {
-          color: generateRandomColor(),
-        },
+        completed: doc.data().completed,
+        color: doc.data().completed ? '#009929' : '#ff4040',
       }));
       setEvents(fetchedEvents);
     });
@@ -81,9 +66,8 @@ const CalendarComponent = () => {
           title,
           start,
           end,
-          extendedProps: {
-            color: generateRandomColor(), // Generar color aleatorio al agregar evento
-          },
+          completed: false, // Agregar propiedad para el estado de la casilla
+          color: '#ff4040', // Rojo menos claro
         });
       } catch (error) {
         console.error("Error al agregar evento: ", error);
@@ -91,14 +75,28 @@ const CalendarComponent = () => {
     }
   };
 
-  const handleSelectEvent = async (event) => {
-    const shouldDelete = window.confirm(`¿Estás seguro de que quieres eliminar el evento "${event.title}"?`);
+  const handleDeleteEvent = async (eventId) => {
+    const shouldDelete = window.confirm("¿Estás seguro de que quieres eliminar este evento?");
     if (shouldDelete) {
       try {
-        await db.collection('events').doc(event.id).delete();
+        await db.collection('events').doc(eventId).delete();
       } catch (error) {
         console.error("Error al eliminar evento: ", error);
       }
+    }
+  };
+
+  const handleCheckboxChange = async (event) => {
+    const updatedEvent = { ...event, completed: !event.completed };
+    try {
+      // Actualizar en Firebase
+      await db.collection('events').doc(event.id).update(updatedEvent);
+
+      // Actualizar el estado local después de la actualización exitosa
+      const updatedEvents = events.map(ev => ev.id === event.id ? updatedEvent : ev);
+      setEvents(updatedEvents);
+    } catch (error) {
+      console.error("Error al actualizar evento: ", error);
     }
   };
 
@@ -111,17 +109,38 @@ const CalendarComponent = () => {
         endAccessor="end"
         selectable
         onSelectSlot={handleSelectSlot}
-        onSelectEvent={handleSelectEvent}
         messages={spanishMessages}
         eventPropGetter={(event) => ({
           style: {
-            backgroundColor: event.extendedProps.color, // Usar el color de extendedProps
+            backgroundColor: event.completed ? '#009929' : '#ff4040', // Usar el color del evento
           },
         })}
-      />
-    </div>
-  );
-};
+        components={{
+            event: ({ event }) => (
+              <div className="event-container">
+                <input
+                  className='checkbox-input'
+                  type="checkbox"
+                  checked={event.completed}
+                  onChange={() => handleCheckboxChange(event)}
+                />
+                <span className="event-title">{event.title}</span>
+                <button className='delete-button' onClick={() => handleDeleteEvent(event.id)}>
+                <i className="fas fa-trash-alt"></i> {/* Ícono de eliminación */}
+              </button>
+              </div>
+            ),
+          }}
+        />
+      </div>
+    );
+  };
+  
+  export default CalendarComponent;
+  
 
-export default CalendarComponent;
+
+
+
+
 
