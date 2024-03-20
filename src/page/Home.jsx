@@ -56,36 +56,35 @@ export const Home = () => {
 
   return (
     <>
-      <div className="bg-secondary mb-5">
+      <div className="bg-secondary mb-3">
         <h1 className="text-center text-white p-5 ">
           MANTENIMIENTO EN PROGRESO
         </h1>
       </div>
 
-      <div className="container d-grid gap-3 mt-4 mb-4">
-
-        <button type="button" className="btn btn-outline-success">
-          <a
-            href="/Calendar"
-            className="text-decoration-none text-success"
-          >
+      <div className="container">
+        <a
+          href="/Calendar"
+          className="text-decoration-none text-success"
+        >
+          <button type="button" className="btn  btn-outline-success">
             FECHA DE VISITA
-          </a>
-        </button>
+          </button>
+        </a>
       </div>
       <hr />
 
-      <div className="container border rounded p-2 mb-5 text-center">
+      <div className="container text-center">
+        <a
+          href="/Recordatorios"
+          className="text-decoration-none text-warning"
+        >
+          <button type="button" className="btn btn-outline-warning">
 
-        <button type="button" className="btn btn-outline-warning">
-          <a
-            href="/Recordatorios"
-            className="text-decoration-none text-warning"
-          >
             RECORDATORIOS
-          </a>
-        </button>
 
+          </button>
+        </a>
         <div className="container mt-3 mb-3">
           {recordatorios.map(recordatorio => (
             <div key={recordatorio.id} className="list-group-item d-flex justify-content-between align-items-center p-2 mb-2">
@@ -125,9 +124,21 @@ export const Home = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">Item 1</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Item 2</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Item 3</Dropdown.Item>
+            <Dropdown.Item >AA2000 DETECCION</Dropdown.Item>
+            <Dropdown.Item >AA2000 HIDRANTES</Dropdown.Item>
+            <Dropdown.Item >BANCO MACRO</Dropdown.Item>
+            <Dropdown.Item >FCA</Dropdown.Item>
+            <Dropdown.Item >GEOCYCLE CCTV</Dropdown.Item>
+            <Dropdown.Item >GEOCYCLE INCENDIO</Dropdown.Item>
+            <Dropdown.Item >HOTELES NH</Dropdown.Item>
+            <Dropdown.Item >HOLCIM</Dropdown.Item>
+            <Dropdown.Item >LA VOZ DEL INTERIOR</Dropdown.Item>
+            <Dropdown.Item >MINISTERIO PUBLICO FISCAL</Dropdown.Item>
+            <Dropdown.Item >NISSAN</Dropdown.Item>
+            <Dropdown.Item >RENAULT</Dropdown.Item>
+            <Dropdown.Item >UNIVERSIDAD S21 CAMPUS</Dropdown.Item>
+            <Dropdown.Item >UNIVERSIDAD S21 NCBA</Dropdown.Item>
+            <Dropdown.Item >UNC DATA CENTER</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
