@@ -22,6 +22,7 @@ const spanishMessages = {
 
 const CalendarComponent = () => {
   const [events, setEvents] = useState([]);
+  const [view, setView] = useState('month'); // Nuevo estado para almacenar la vista actual
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -59,18 +60,20 @@ const CalendarComponent = () => {
   }, []);
 
   const handleSelectSlot = async ({ start, end }) => {
-    const title = prompt('Ingrese el título del evento:');
-    if (title) {
-      try {
-        await db.collection('events').add({
-          title,
-          start,
-          end,
-          completed: false, // Agregar propiedad para el estado de la casilla
-          color: '#ff4040', // Rojo menos claro
-        });
-      } catch (error) {
-        console.error("Error al agregar evento: ", error);
+    if (view === 'day') { // Verificar si la vista actual es día
+      const title = prompt('Ingrese el título del evento:');
+      if (title) {
+        try {
+          await db.collection('events').add({
+            title,
+            start,
+            end,
+            completed: false, // Agregar propiedad para el estado de la casilla
+            color: '#ff4040', // Rojo menos claro
+          });
+        } catch (error) {
+          console.error("Error al agregar evento: ", error);
+        }
       }
     }
   };
@@ -109,6 +112,7 @@ const CalendarComponent = () => {
         endAccessor="end"
         selectable
         onSelectSlot={handleSelectSlot}
+        onView={(view) => setView(view)} // Actualizar el estado de la vista actual
         messages={spanishMessages}
         eventPropGetter={(event) => ({
           style: {
@@ -137,7 +141,7 @@ const CalendarComponent = () => {
   };
   
   export default CalendarComponent;
-  
+
 
 
 

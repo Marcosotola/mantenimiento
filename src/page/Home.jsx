@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { parse, format } from 'date-fns';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 export const Home = () => {
   const [recordatorios, setRecordatorios] = useState([]);
@@ -116,7 +117,23 @@ export const Home = () => {
         </div>
         <hr />
       </div>
-      <div className="container">
+
+      <div className="container mb-5 text-center">
+        <Dropdown>
+          <Dropdown.Toggle variant="primary" id="dropdown-basic">
+            LISTA DE CLIENTES
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item href="#/action-1">Item 1</Dropdown.Item>
+            <Dropdown.Item href="#/action-2">Item 2</Dropdown.Item>
+            <Dropdown.Item href="#/action-3">Item 3</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
+
+
+      {/*  <div className="container">
         <h4 className="d-flex justify-content-center p-3 text-light">
           LISTA DE PENDIENTES
         </h4>
@@ -155,7 +172,7 @@ export const Home = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </>
   );
 };
