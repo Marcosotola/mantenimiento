@@ -60,10 +60,31 @@ export const Home = () => {
           MANTENIMIENTO EN PROGRESO
         </h1>
       </div>
-      <div className="container border rounded p-2 mb-5">
-        <h4 className="d-flex justify-content-center text-light">
-          RECORDATORIOS
-        </h4>
+
+      <div className="container d-grid gap-3 mt-4 mb-4">
+
+        <button type="button" className="btn btn-outline-success">
+          <a
+            href="/Calendar"
+            className="text-decoration-none text-success"
+          >
+            FECHA DE VISITA
+          </a>
+        </button>
+      </div>
+      <hr />
+
+      <div className="container border rounded p-2 mb-5 text-center">
+
+        <button type="button" className="btn btn-outline-warning">
+          <a
+            href="/Recordatorios"
+            className="text-decoration-none text-warning"
+          >
+            RECORDATORIOS
+          </a>
+        </button>
+
         <div className="container mt-3 mb-3">
           {recordatorios.map(recordatorio => (
             <div key={recordatorio.id} className="list-group-item d-flex justify-content-between align-items-center p-2 mb-2">
@@ -79,27 +100,19 @@ export const Home = () => {
       <div>
         <hr />
         <div className="container d-grid gap-3 mt-4 mb-4">
-        <button type="button" className="btn btn-outline-success">
-            <a
-              href="/Calendar"
-              className="text-decoration-none text-success"
-            >
-              VISITA TECNICA
+
+          <button class="btn btn-lg btn-secondary" type="button">
+            <a href="/Preventivos" className="text-decoration-none text-info">
+              PREVENTIVOS
             </a>
           </button>
-          <button type="button" className="btn btn-outline-warning">
-            <a
-              href="/Recordatorios"
-              className="text-decoration-none text-warning"
-            >
-              RECORDATORIOS
-            </a>
-          </button>
-          <button type="button" className="btn btn-outline-info">
+
+          <button class="btn btn-lg btn-secondary" type="button">
             <a href="/Pendientes" className="text-decoration-none text-info">
-              TAREAS PENDIENTES
+              CORRECTIVOS
             </a>
           </button>
+
         </div>
         <hr />
       </div>

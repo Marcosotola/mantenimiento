@@ -103,17 +103,17 @@ const Recordatorios = () => {
       <table className="table mt-4">
         <thead>
           <tr className=''>
-            <th className='text-center'>Fecha</th>
-            <th className='text-center'>Descripción</th>
+            <th className='text-center text-secondary'>Fecha</th>
+            <th className='text-center text-secondary'>Descripción</th>
           </tr>
         </thead>
         <tbody>
           {recordatorios.map(recordatorio => (
             <tr key={recordatorio.id}>
-              <td className='text-center justify-content-center align-items-center'>
+              <td className='text-center justify-content-center align-items-center text-light'>
                 {format(parse(recordatorio.fecha, 'yyyy-MM-dd', new Date()), 'dd/MM/yy')}
               </td>
-              <td className='text-center justify-content-center align-items-center'>{recordatorio.descripcion}</td>
+              <td className='text-center justify-content-center align-items-center text-light'>{recordatorio.descripcion}</td>
               <td>
                 <button className="btn justify-content-center align-items-center">
                   <i

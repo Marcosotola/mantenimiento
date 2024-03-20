@@ -206,11 +206,11 @@ export const Pendientes = () => {
               className="btn btn-primary"
               onClick={() => setMostrarFormulario(true)}
             >
-              <i className="material-icons">add</i> Agregar Pendiente
+              <i className="material-icons">add</i> Agregar Correctivo
             </button>
           ) : (
             <>
-              <h4 className="d-flex justify-content-center p-3">Ingresar Pendiente</h4>
+              <h4 className="d-flex justify-content-center p-3">Ingresar Correctivo</h4>
               <form className="card card-body p-4" onSubmit={handleSubmit}>
                 <div className="form-group input-group p-1">
                   <div className="input-group-text bg-light">
@@ -272,7 +272,7 @@ export const Pendientes = () => {
         </div>
 
         <div className=" col-md-8 mx-auto p-2">
-          <h4 className="d-flex justify-content-center p-3">Reporte de Pendientes</h4>
+          <h4 className="d-flex justify-content-center p-3">Correctivos</h4>
           <div className="form-group input-group p-1 mb-3">
             <div className="input-group-text bg-light">
               <i className="material-icons text-primary">search</i>

@@ -8,6 +8,7 @@ import Home from "./page/Home.jsx";
 import Calendar from './page/Calendar.jsx';
 import Pendientes from './page/Pendientes.jsx';
 import Recordatorios from './page/Recordatorios.jsx';
+import Preventivos from './page/Preventivos.jsx';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/Calendar" element={<Calendar />} />
             <Route path="/Pendientes" element={<Pendientes />} />
             <Route path="/Recordatorios" element={<Recordatorios />} />
+            <Route path="/Preventivos" element={<Preventivos />} />
           </Routes>
         </Router>
         <ToastContainer />
