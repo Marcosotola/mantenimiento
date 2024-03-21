@@ -168,14 +168,14 @@ export const Renault = () => {
         }, 100); // Intenta cada 100ms
       }
     };
-  
+
     handleScrollToElement();
-  
+
     return () => {
       handleScrollToElement();
     };
   }, [hashFragment]);
-  
+
 
   return (
     <>
@@ -230,77 +230,73 @@ export const Renault = () => {
 
         <div className=" col-md-8 mx-auto p-2">
           <h4
- className="d-flex justify-content-center p-3">Ordenes de Trabajo</h4>
- <div className="form-group input-group p-1 mb-3">
-   <div className="input-group-text bg-light">
-     <i className="material-icons text-primary">search</i>
-   </div>
-   <input
-     type="date"
-     className="form-control"
-     placeholder="Filtrar por Fecha"
-     onChange={(e) => setFilterDate(e.target.value)}
-     value={filterDate}
-   />
- </div>
- {pendientes.map((pendiente) => (
-   <div
-     className={`card mb-1 text-center mb-5`}
-     key={pendiente.id}
-     id={pendiente.id} // Asignar el ID del pendiente como ID del elemento
-   >
-     <div className="card-body">
-       <div className="d-flex justify-content-between align-items-center">
-         <div>
-           <h6 className="text-info">
-             {format(new Date(pendiente.data), 'dd/MM/yyyy')}
-           </h6>
-         </div>
-       </div>
-       <hr />
-       <div className="d-flex justify-content-between align-items-center mb-3">
-         <div>
-           <h4 className={`text-success`}>
-             {pendiente.name}
-           </h4>
-         </div>
-         <div>
-           <button className="btn">
-             <i
-               className="material-icons text-danger"
-               onClick={() => onDeletePendiente(pendiente.id)}
-             >
-               delete
-             </i>
-           </button>
-           <button className="btn" onClick={scrollToTop}>
-             <i
-               className="material-icons"
-               onClick={() => handleEditReminder(pendiente.id)}
-             >
-               edit
-             </i>
-           </button>
-         </div>
-       </div>
+            className="d-flex justify-content-center p-3">Ordenes de Trabajo</h4>
+          <div className="form-group input-group p-1 mb-3">
+            <div className="input-group-text bg-light">
+              <i className="material-icons text-primary">search</i>
+            </div>
+            <input
+              type="date"
+              className="form-control"
+              placeholder="Filtrar por Fecha"
+              onChange={(e) => setFilterDate(e.target.value)}
+              value={filterDate}
+            />
+          </div>
+          {pendientes.map((pendiente) => (
+            <div
+              className={`card mb-1 text-center mb-5`}
+              key={pendiente.id}
+              id={pendiente.id} // Asignar el ID del pendiente como ID del elemento
+            >
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="text-info">
+                      {format(new Date(pendiente.data), 'dd/MM/yyyy')}
+                    </h6>
+                  </div>
+                  <div className="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                      <button className="btn">
+                        <i
+                          className="material-icons text-danger"
+                          onClick={() => onDeletePendiente(pendiente.id)}
+                        >
+                          delete
+                        </i>
+                      </button>
+                      <button className="btn" onClick={scrollToTop}>
+                        <i
+                          className="material-icons"
+                          onClick={() => handleEditReminder(pendiente.id)}
+                        >
+                          edit
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-       {pendiente.imageUrl && (
-         <div className="mt-3">
-           <img
-             src={pendiente.imageUrl}
-             alt="Imagen adjunta"
-             style={{ width: "100px", cursor: "pointer" }}
-             onClick={() => window.open(pendiente.imageUrl, "_blank")}
-           />
-         </div>
-       )}
-     </div>
-   </div>
- ))}
-</div>
-</div>
-</>
-);
+
+
+                {pendiente.imageUrl && (
+                  <div className="mt-3">
+                    <img
+                      src={pendiente.imageUrl}
+                      alt="Imagen adjunta"
+                      style={{ width: "50px", cursor: "pointer" }}
+                      onClick={() => window.open(pendiente.imageUrl, "_blank")}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Renault;
