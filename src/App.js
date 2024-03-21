@@ -9,6 +9,8 @@ import Calendar from './page/Calendar.jsx';
 import Pendientes from './page/Pendientes.jsx';
 import Recordatorios from './page/Recordatorios.jsx';
 import Preventivos from './page/Preventivos.jsx';
+import Renault from './page/Renault.jsx';
+import Holcim from './page/Holcim.jsx';
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
             <Route path="/Pendientes" element={<Pendientes />} />
             <Route path="/Recordatorios" element={<Recordatorios />} />
             <Route path="/Preventivos" element={<Preventivos />} />
+            <Route path="/Renault" element={<Renault />} />
+            <Route path="/Holcim" element={<Holcim />} />
           </Routes>
         </Router>
         <ToastContainer />

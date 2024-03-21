@@ -15,6 +15,7 @@
 /* Estilos para el título de los eventos */
 .event-title {
   margin-left: 10px;
+  font-weight: bold;
 }
 
 .rbc-btn-group {
@@ -28,6 +29,7 @@
   color: white;
   white-space: nowrap;
   background-color: #fff;
+  padding: 0.2rem;
 }
 
 .rbc-header span {
@@ -50,6 +52,9 @@
 
 .rbc-toolbar-label {
   font-size: xx-large;
+}
+.rbc-label {
+  font-size: x-large;
 }
 
 /* Estilos para los encabezados de las columnas (días) */
@@ -77,10 +82,7 @@
   border-right: 1px solid #ccc;
 }
 
-.rbc-event-content {
-  padding: 2px 5px;
-  margin-bottom: 5px;
-}
+
 
 .rbc-agenda-event-cell,
 .rbc-agenda-time-cell,
@@ -110,4 +112,8 @@
 
 .rbc-button-link {
   font-size: x-large;
+}
+
+.rbc-time-view {
+  width: 50% !important; 
 }
