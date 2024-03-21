@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import moment from 'moment';
 import { db } from "../firebase";
 import './Calendar.css';
@@ -16,13 +16,13 @@ const spanishMessages = {
   week: 'Semana',
   day: 'Día',
   agenda: 'Agenda',
-  showMore: total => `+ Mostrar más (${total})`, // Función showMore actualizada
+  showMore: total => `+ Mostrar más (${total})`,
   noEventsInRange: 'No hay eventos en este rango',
 };
 
 const CalendarComponent = () => {
   const [events, setEvents] = useState([]);
-  const [view, setView] = useState('month'); // Nuevo estado para almacenar la vista actual
+  const [view, setView] = useState('month');
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -33,8 +33,6 @@ const CalendarComponent = () => {
           ...doc.data(),
           start: doc.data().start.toDate(),
           end: doc.data().end.toDate(),
-          completed: doc.data().completed,
-          color: doc.data().completed ? '#009929' : '#ff4040',
         }));
         setEvents(fetchedEvents);
       } catch (error) {
@@ -50,8 +48,6 @@ const CalendarComponent = () => {
         ...doc.data(),
         start: doc.data().start.toDate(),
         end: doc.data().end.toDate(),
-        completed: doc.data().completed,
-        color: doc.data().completed ? '#009929' : '#ff4040',
       }));
       setEvents(fetchedEvents);
     });
@@ -60,7 +56,7 @@ const CalendarComponent = () => {
   }, []);
 
   const handleSelectSlot = async ({ start, end }) => {
-    if (view === 'day') { // Verificar si la vista actual es día
+    if (view === 'day' && moment(start).isSame(end, 'day')) {
       const title = prompt('Ingrese el título del evento:');
       if (title) {
         try {
@@ -68,8 +64,7 @@ const CalendarComponent = () => {
             title,
             start,
             end,
-            completed: false, // Agregar propiedad para el estado de la casilla
-            color: '#ff4040', // Rojo menos claro
+            completed: false,
           });
         } catch (error) {
           console.error("Error al agregar evento: ", error);
@@ -92,10 +87,7 @@ const CalendarComponent = () => {
   const handleCheckboxChange = async (event) => {
     const updatedEvent = { ...event, completed: !event.completed };
     try {
-      // Actualizar en Firebase
       await db.collection('events').doc(event.id).update(updatedEvent);
-
-      // Actualizar el estado local después de la actualización exitosa
       const updatedEvents = events.map(ev => ev.id === event.id ? updatedEvent : ev);
       setEvents(updatedEvents);
     } catch (error) {
@@ -103,44 +95,50 @@ const CalendarComponent = () => {
     }
   };
 
+  const customDayEvent = ({ event }) => (
+    <div className="event-container" style={{ backgroundColor: '#f0f0f0', border: 'none' }}>
+      <input
+        className='checkbox-input'
+        type="checkbox"
+        checked={event.completed}
+        onChange={() => handleCheckboxChange(event)}
+      />
+      <span className="event-title" style={{ color: event.completed ? '#009929' : '#ff4040' }}>{event.title}</span>
+      <button className='delete-button' onClick={() => handleDeleteEvent(event.id)}>
+        <i className="fas fa-trash-alt"></i> 
+      </button>
+    </div>
+  );
+
   return (
     <div className="calendar-container">
       <Calendar
         localizer={localizer}
         events={events}
-        startAccessor="start"
-        endAccessor="end"
+        views={{ day: true, month: true }}
+        defaultView={Views.MONTH}
         selectable
         onSelectSlot={handleSelectSlot}
-        onView={(view) => setView(view)} // Actualizar el estado de la vista actual
+        onView={(view) => setView(view)}
         messages={spanishMessages}
-        eventPropGetter={(event) => ({
-          style: {
-            backgroundColor: event.completed ? '#009929' : '#ff4040', // Usar el color del evento
-          },
-        })}
-        components={{
-            event: ({ event }) => (
-              <div className="event-container">
-                <input
-                  className='checkbox-input'
-                  type="checkbox"
-                  checked={event.completed}
-                  onChange={() => handleCheckboxChange(event)}
-                />
-                <span className="event-title">{event.title}</span>
-                <button className='delete-button' onClick={() => handleDeleteEvent(event.id)}>
-                <i className="fas fa-trash-alt"></i> 
-              </button>
-              </div>
-            ),
-          }}
-        />
-      </div>
-    );
-  };
-  
-  export default CalendarComponent;
+        timeslots={2}
+        min={moment().startOf('day').set({ hour: 9, minute: 0 })}
+        max={moment().startOf('day').set({ hour: 18, minute: 0 })}
+        components={{ event: customDayEvent }}
+      />
+    </div>
+  );
+};
+
+export default CalendarComponent;
+
+
+
+
+
+
+
+
 
 
 
