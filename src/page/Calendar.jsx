@@ -96,7 +96,7 @@ const CalendarComponent = () => {
   };
 
   const customDayEvent = ({ event }) => (
-    <div className="event-container" style={{ backgroundColor: '#f0f0f0', border: 'none' }}>
+    <div className="event-container" style={{ backgroundColor: '#fff', border: 'none' }}>
       <input
         className='checkbox-input'
         type="checkbox"
@@ -121,7 +121,8 @@ const CalendarComponent = () => {
         onSelectSlot={handleSelectSlot}
         onView={(view) => setView(view)}
         messages={spanishMessages}
-        timeslots={2}
+        timeslots={1}
+        step={120}
         min={moment().startOf('day').set({ hour: 9, minute: 0 })}
         max={moment().startOf('day').set({ hour: 18, minute: 0 })}
         components={{ event: customDayEvent }}
