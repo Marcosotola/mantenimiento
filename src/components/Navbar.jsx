@@ -29,34 +29,35 @@ const Navbar = () => {
             id="navbarColor03"
           >
             <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-                <a className="nav-link " href="/">
+            <li className="nav-item ">
+                <a className="nav-link border p-2 mb-1 mt-1" href="/">
                  INICIO
                   <span className="visually-hidden">(current)</span>
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link " href="/calendar">
+                <a className="nav-link border p-2 mb-1 " href="/calendar">
                   FECHA DE VISITA
                   <span className="visually-hidden">(current)</span>
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="Recordatorios">
+                <a className="nav-link border p-2 mb-1" href="Recordatorios">
                   RECORDATORIOS
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="Pendientes">
+                <a className="nav-link border p-2 mb-1" href="Preventivos">
+                PREVENTIVOS
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link border p-2 mb-1" href="Pendientes">
                   CORRECTIVOS
                 </a>
               </li>
 
-              <li className="nav-item">
-                <a className="nav-link" href="Preventivos">
-                PREVENTIVOS
-                </a>
-              </li>
+
             </ul>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db, storage } from "../firebase";
 import { toast } from "react-toastify";
-import { format } from 'date-fns';
+import {parse, format } from 'date-fns';
 
 export const Renault = () => {
   const scrollToTop = () => {
@@ -253,7 +253,8 @@ export const Renault = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <h6 className="text-info">
-                      {format(new Date(pendiente.data), 'dd/MM/yyyy')}
+                    {format(parse(pendiente.data, 'yyyy-MM-dd', new Date()), 'dd/MM/yy')}
+                      
                     </h6>
                   </div>
                   <div className="d-flex justify-content-between align-items-center mb-3">
