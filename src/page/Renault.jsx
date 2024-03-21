@@ -245,7 +245,7 @@ export const Renault = () => {
           </div>
           {pendientes.map((pendiente) => (
             <div
-              className={`card mb-1 text-center mb-5`}
+              className={`card mb-1 text-center`}
               key={pendiente.id}
               id={pendiente.id} // Asignar el ID del pendiente como ID del elemento
             >
@@ -278,8 +278,6 @@ export const Renault = () => {
                     </div>
                   </div>
                 </div>
-
-
 
                 {pendiente.imageUrl && (
                   <div className="mt-3">

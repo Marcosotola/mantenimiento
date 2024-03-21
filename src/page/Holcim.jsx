@@ -244,7 +244,7 @@ export const Holcim = () => {
           </div>
           {pendientes.map((pendiente) => (
             <div
-              className={`card mb-1 text-center mb-5`}
+              className={`card mb-1 text-center`}
               key={pendiente.id}
               id={pendiente.id} // Asignar el ID del pendiente como ID del elemento
             >
